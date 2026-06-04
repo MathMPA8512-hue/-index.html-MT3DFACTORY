@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>MT3DFACTORY – Ici, tout devient réalisable</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --bg: #050509;
+      --bg-alt: #0b0b12;
+      --primary: #7b5cff;
+      --accent: #00ffc8;
+      --accent-soft: rgba(0,255,200,0.15);
+      --text: #f5f5f5;
+      --muted: #a9a9b8;
+      --danger: #ff4b81;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: radial-gradient(circle at top, #1a1a2e 0, #050509 60%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(5,5,9,0.9);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      color: var(--muted);
+      margin-left: 1rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), #4a2aff);
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-outline {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: inline-block;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2.2rem 2rem 3rem;
+    }
+
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    h1, h2, h3, h4 {
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 800;
+    }
+
+    h1 { font-size: 2.7rem; margin-bottom: 0.8rem; }
+    h2 { font-size: 1.7rem; margin-bottom: 1rem; }
+    h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+
+    p { color: var(--muted); }
+
+    .tagline {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-alt);
+      padding: 1.5rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .card-soft {
+      background: rgba(11,11,18,0.8);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .badge-accent {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .price-value { color: var(--accent); font-weight: 700; }
+
+    ul { margin-left: 1.2rem; color: var(--muted); font-size: 0.9rem; }
+
+    .timeline {
+      border-left: 2px solid rgba(255,255,255,0.15);
+      padding-left: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .timeline-item {
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -1.25rem;
+      top: 0.35rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .faq-item {
+      margin-bottom: 1rem;
+    }
+
+    .faq-q {
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .faq-a {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .pill {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* IA */
+    .ia-toggle {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--primary);
+      padding: 0.8rem 1.2rem;
+      border-radius: 999px;
+      cursor: pointer;
+      color: white;
+      font-size: 0.85rem;
+      box-shadow: 0 0 20px rgba(123,92,255,0.6);
+      z-index: 200;
+    }
+
+    .ia-box {
+      position: fixed;
+      bottom: 4.5rem;
+      right: 1.5rem;
+      width: 340px;
+      max-height: 420px;
+      background: #0b0b12;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 200;
+    }
+
+    .ia-header {
+      background: linear-gradient(135deg, var(--primary), #4a2aff);
+      padding: 0.7rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ia-body {
+      padding: 0.8rem;
+      height: 260px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .ia-msg {
+      padding: 0.5rem 0.7rem;
+      border-radius: 8px;
+      max-width: 85%;
+    }
+
+    .ia-bot { background: #1a1a2e; align-self: flex-start; }
+    .ia-user { background: var(--primary); align-self: flex-end; }
+
+    .ia-footer {
+      padding: 0.7rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .ia-input {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: none;
+      background: #111;
+      color: white;
+      font-size: 0.85rem;
+    }
+
+    .ia-send {
+      padding: 0.5rem 0.8rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .ia-hints {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Galerie */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      background: var(--bg-alt);
+      border-radius: 12px;
+      padding: 0.8rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.85rem;
+    }
+
+    .gallery-thumb {
+      width: 100%;
+      height: 140px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #2b2b40, #111);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .badge-small {
+      font-size: 0.65rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+    }
+
+    .roadmap-step {
+      margin-bottom: 1rem;
+    }
+
+    .roadmap-year {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+
+    .badge-new {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+
+    @media (max-width: 900px) {
+      main { padding: 1.4rem 1.2rem 2.4rem; }
+      header { padding: 0.8rem 1rem; }
+      nav { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .nav-links { justify-content: flex-start; }
+      nav a { margin-left: 0.4rem; font-size: 0.7rem; }
+      h1 { font-size: 2.1rem; }
+      .ia-box { right: 0.8rem; width: calc(100% - 1.6rem); }
+      .ia-toggle { right: 0.8rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <div class="logo">MT3DFACTORY</div>
+    <div class="nav-links">
+      <a href="#accueil">Accueil</a>
+      <a href="#histoire">Notre histoire</a>
+      <a href="#produits">Produits</a>
+      <a href="#articles">Articles</a>
+      <a href="#panier">Panier</a>
+      <a href="#commande">Commande</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#nouveautes">Nouveautés</a>
+      <a href="#avis">Avis</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#editions">Éditions limitées</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#devis">Devis</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h" target="_blank">Chaîne</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<!-- ACCUEIL -->
+<section id="accueil">
+  <div class="tagline">Atelier d’impression 3D – Genas / Est Lyonnais</div>
+  <h1>Ici, tout devient réalisable</h1>
+  <p>
+    <strong>MT3DFACTORY</strong>, c’est l’atelier d’impression 3D lancé par <strong>Mathis &amp; Timéo</strong>.
+    Une imprimante, beaucoup d’idées, et une promesse : chaque pièce qui sort de la machine doit être
+    suffisamment propre pour être posée sur un bureau, un setup gaming ou une étagère sans avoir honte.
+  </p>
+  <p style="margin-top:0.6rem;">
+    Nous imprimons des figurines Pokémon, des porte-clés personnalisés, des brainrots, des supports gaming
+    et des objets sur mesure. Tu nous envoies ton idée, on te dit ce qui est possible, à quel prix, et dans
+    quel délai.
+  </p>
+  <br>
+  <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
+    <a class="btn" href="https://wa.me/33615251063" target="_blank">Commander sur WhatsApp</a>
+    <a class="btn-outline" href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h" target="_blank">Rejoindre la chaîne</a>
+  </div>
+  <p style="margin-top:0.8rem; font-size:0.85rem; color:var(--muted);">
+    48h autour de Lyon · 1 semaine France entière · Chaque pièce est imprimée à la demande, après validation.
+  </p>
+</section>
+
+<!-- NOTRE HISTOIRE -->
+<section id="histoire">
+  <div class="tagline">Notre histoire</div>
+  <h2>Mathis &amp; Timéo – la naissance de MT3DFACTORY</h2>
+  <p>
+    À la base, il n’y avait pas de “marque”, pas de “site”, pas de “stratégie”. Il y avait juste
+    <strong>Mathis &amp; Timéo</strong>, une imprimante 3D, et l’envie de voir si on pouvait transformer
+    des fichiers 3D en vrais objets qui donnent le sourire.
+  </p>
+  <p style="margin-top:0.6rem;">
+    Les premières impressions, c’était pour nous, pour la famille, pour les potes. Des tests, des ratés,
+    des pièces qui se décollent, des supports mal réglés… mais aussi les premiers “Wouah, c’est toi qui
+    as fait ça ?”. C’est là qu’on a compris qu’il y avait quelque chose à construire.
+  </p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <h4>Étape 1 – Les premiers tests</h4>
+      <p class="sub">
+        Réglages, calibrage, essais de figurines simples. On apprend la machine, les matériaux, les limites.
+      </p>
+    </div>
+    <div class="timeline-item">
+      <h4>Étape 2 – Les premières demandes</h4>
+      <p class="sub">
+        “Tu peux me faire un porte-clé ?”, “Tu peux me faire un Pokémon ?”. On commence à noter les idées,
+        à réfléchir aux tailles, aux prix, aux délais.
+      </p>
+    </div>
+    <div class="timeline-item">
+      <h4>Étape 3 – Le nom MT3DFACTORY</h4>
+      <p class="sub">
+        On voulait un nom simple, qui dit ce qu’on fait : <strong>MT</strong> pour Mathis &amp; Timéo,
+        <strong>3D</strong> pour l’impression, <strong>FACTORY</strong> pour le côté atelier qui produit.
+      </p>
+    </div>
+    <div class="timeline-item">
+      <h4>Étape 4 – Les premières “vraies” commandes</h4>
+      <p class="sub">
+        On commence à organiser : qui répond, qui prépare les fichiers, qui lance les impressions, qui
+        vérifie la qualité. Chaque commande devient un mini-projet.
+      </p>
+    </div>
+    <div class="timeline-item">
+      <h4>Étape 5 – Le site & la chaîne WhatsApp</h4>
+      <p class="sub">
+        Pour être plus clair, plus pro, plus simple à suivre, on crée ce site et une chaîne WhatsApp
+        pour montrer les nouveautés, les idées, les projets en cours.
+      </p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:1.4rem;">Notre vision</h3>
+  <p>
+    Nous ne prétendons pas être une énorme usine. Nous assumons d’être un atelier en lancement, qui
+    grandit commande après commande. Notre objectif est simple : améliorer notre matériel, nos finitions
+    et notre catalogue, tout en restant proches des gens qui nous commandent des pièces.
+  </p>
+
+  <h3 style="margin-top:1.4rem;">Nos objectifs</h3>
+  <ul>
+    <li>Élargir progressivement le catalogue (plus de Pokémon, plus de supports, plus de thèmes).</li>
+    <li>Investir dans du matériel plus avancé au fur et à mesure.</li>
+    <li>Garder un contact direct avec chaque personne qui commande.</li>
+    <li>Montrer qu’on peut faire les choses sérieusement, même en partant petit.</li>
+  </ul>
+</section>
+
+<!-- PRODUITS -->
+<section id="produits">
+  <div class="tagline">Catalogue</div>
+  <h2>Nos grandes catégories de produits</h2>
+  <p style="margin-bottom:1.2rem;">
+    Voici les familles d’objets que nous proposons le plus souvent. Chaque catégorie peut être adaptée
+    en taille, couleur et style selon ta demande.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="badge badge-accent">Best-seller</span>
+      <h3>Figurines Pokémon</h3>
+      <p>Pour les fans qui veulent voir leurs Pokémon préférés en vrai, sur leur bureau ou leur setup.</p>
+      <ul>
+        <li>Petites (5–7 cm) – parfaites pour collectionner</li>
+        <li>Moyennes (10–12 cm) – plus visibles, plus détaillées</li>
+        <li>Premium – bustes ou modèles plus complexes</li>
+      </ul>
+      <div class="pill-row">
+        <div class="pill">Pikachu</div>
+        <div class="pill">Dracaufeu</div>
+        <div class="pill">Évoli</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="badge">Personnalisé</span>
+      <h3>Porte-clés personnalisés</h3>
+      <p>Ton prénom, tes initiales, ton pseudo, ton Pokémon préféré… en version porte-clé.</p>
+      <ul>
+        <li>Prénoms simples</li>
+        <li>Initiales stylisées</li>
+        <li>Thèmes Pokémon ou gaming</li>
+      </ul>
+      <div class="pill-row">
+        <div class="pill">Cadeau</div>
+        <div class="pill">Classe</div>
+        <div class="pill">Équipe</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="badge">Fun</span>
+      <h3>Brainrots &amp; memes</h3>
+      <p>Objets inspirés de la culture internet, TikTok, memes et private jokes.</p>
+      <ul>
+        <li>Porte-clés brainrot</li>
+        <li>Mini figurines meme</li>
+      </ul>
+      <div class="pill-row">
+        <div class="pill">TikTok</div>
+        <div class="pill">Meme</div>
+        <div class="pill">Setup fun</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="badge">Setup</span>
+      <h3>Supports gaming</h3>
+      <p>Pour que ton bureau ne soit pas juste “plein”, mais organisé et stylé.</p>
+      <ul>
+        <li>Supports manette PS / Xbox</li>
+        <li>Supports téléphone</li>
+        <li>Supports souris / accessoires</li>
+      </ul>
+      <div class="pill-row">
+        <div class="pill">PS5</div>
+        <div class="pill">Xbox</div>
+        <div class="pill">Bureau clean</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="badge">Sur mesure</span>
+      <h3>Objets personnalisés</h3>
+      <p>Tu as une idée précise ? On regarde ensemble ce qui est faisable avec notre imprimante actuelle.</p>
+      <p style="margin-top:0.4rem; font-size:0.9rem;">
+        Le mieux : nous envoyer une image ou un croquis sur WhatsApp, avec la taille souhaitée.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES / BOUTIQUE -->
+<section id="articles">
+  <div class="tagline">Boutique</div>
+  <h2>Articles disponibles & idées de commandes</h2>
+  <p style="margin-bottom:1.5rem; color:var(--muted);">
+    Voici une sélection d’articles que nous pouvons imprimer.  
+    Chaque pièce est imprimée à la demande, après validation avec toi sur WhatsApp.
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+      <span class="badge badge-accent">Top vente</span>
+      <h3>Pikachu – Figurine 10 cm</h3>
+      <p>Le classique absolu. Parfait pour un bureau, une étagère ou un setup Pokémon.</p>
+      <p style="margin-top:0.5rem;"><strong>Prix :</strong> 15 €</p>
+      <p class="sub">Couleur : jaune (autres couleurs possibles sur demande).</p>
+      <a class="btn" style="margin-top:0.8rem;"
+         href="https://wa.me/33615251063?text=Je%20veux%20commander%20le%20Pikachu%2010cm"
+         target="_blank">Ajouter au panier</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">Personnalisé</span>
+      <h3>Porte-clé Prénom</h3>
+      <p>Ton prénom, ta couleur, ton style. Idéal pour cartable, sac, trousse, clés.</p>
+      <p style="margin-top:0.5rem;"><strong>Prix :</strong> 6 €</p>
+      <p class="sub">Tu nous envoies le prénom + la couleur souhaitée.</p>
+      <a class="btn" style="margin-top:0.8rem;"
+         href="https://wa.me/33615251063?text=Je%20veux%20un%20porte-cl%C3%A9%20pr%C3%A9nom"
+         target="_blank">Ajouter au panier</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">Setup</span>
+      <h3>Support Manette PS/Xbox</h3>
+      <p>Pour poser ta manette proprement, sans qu’elle traîne sur le bureau.</p>
+      <p style="margin-top:0.5rem;"><strong>Prix :</strong> 12–18 €</p>
+      <p class="sub">Compatible PS5 / Xbox. Design à définir ensemble.</p>
+      <a class="btn" style="margin-top:0.8rem;"
+         href="https://wa.me/33615251063?text=Je%20veux%20un%20support%20manette"
+         target="_blank">Ajouter au panier</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">Fun</span>
+      <h3>Brainrot – Mini Figurine</h3>
+      <p>Le meme parfait pour ton bureau. Objet 100% “inside joke”.</p>
+      <p style="margin-top:0.5rem;"><strong>Prix :</strong> 10 €</p>
+      <p class="sub">On choisit le brainrot ensemble selon ton délire.</p>
+      <a class="btn" style="margin-top:0.8rem;"
+         href="https://wa.me/33615251063?text=Je%20veux%20un%20brainrot"
+         target="_blank">Ajouter au panier</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">Pokémon</span>
+      <h3>Pokéball – Version Display</h3>
+      <p>Objet déco pour setup gaming, vitrine ou étagère.</p>
+      <p style="margin-top:0.5rem;"><strong>Prix :</strong> 12 €</p>
+      <p class="sub">Possibilité de socle ou base selon demande.</p>
+      <a class="btn" style="margin-top:0.8rem;"
+         href="https://wa.me/33615251063?text=Je%20veux%20une%20Pok%C3%A9ball"
+         target="_blank">Ajouter au panier</a>
+    </div>
+
+    <div class="card">
+      <span class="badge badge-accent">Sur mesure</span>
+      <h3>Objet personnalisé</h3>
+      <p>Tu as une idée précise ? On en discute et on voit ce qui est possible.</p>
+      <p style="margin-top:0.5rem;"><strong>Prix :</strong> Sur devis</p>
+      <p class="sub">Envoie une image, une description, une taille approximative.</p>
+      <a class="btn" style="margin-top:0.8rem;"
+         href="https://wa.me/33615251063?text=J%27ai%20une%20id%C3%A9e%20sur%20mesure"
+         target="_blank">Demander un devis</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PANIER -->
+<section id="panier">
+  <div class="tagline">Panier</div>
+  <h2>Ton panier MT3DFACTORY</h2>
+  <p>
+    Ici, tu peux visualiser un exemple de panier type.  
+    En vrai, la validation se fait par message sur WhatsApp pour rester simple et direct.
+  </p>
+
+  <div class="card" style="margin-top:1rem;">
+    <h3>Exemple de panier</h3>
+    <div class="price-row">
+      <span>Pikachu – Figurine 10 cm</span>
+      <span>15 €</span>
+    </div>
+    <div class="price-row">
+      <span>Porte-clé prénom “Léo”</span>
+      <span>6 €</span>
+    </div>
+    <div class="price-row">
+      <span>Support manette PS5</span>
+      <span>14 €</span>
+    </div>
+    <hr style="border:none; border-top:1px solid rgba(255,255,255,0.15); margin:0.7rem 0;">
+    <div class="price-row">
+      <span><strong>Total estimé</strong></span>
+      <span class="price-value"><strong>35 €</strong></span>
+    </div>
+    <p class="sub" style="margin-top:0.6rem;">
+      Pour transformer ce panier en vraie commande, envoie-nous un message avec la liste de ce que tu veux.
+    </p>
+    <a class="btn" style="margin-top:0.8rem;"
+       href="https://wa.me/33615251063?text=Voici%20mon%20panier%20MT3DFACTORY"
+       target="_blank">Envoyer mon panier sur WhatsApp</a>
+  </div>
+</section>
+
+<!-- COMMANDE COMPLETE -->
+<section id="commande">
+  <div class="tagline">Commande</div>
+  <h2>Processus de commande complet</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>1. Tu choisis ton idée</h3>
+      <p>
+        Tu repères un article dans la boutique, une catégorie (Pokémon, porte-clé, brainrot, support) ou
+        tu viens avec ton idée sur mesure.
+      </p>
+    </div>
+    <div class="card">
+      <h3>2. Tu nous écris</h3>
+      <p>
+        Tu nous contactes sur WhatsApp au <strong>06 15 25 10 63</strong> ou via le bouton ci-dessous.
+        Tu expliques ce que tu veux, avec si possible une image ou un exemple.
+      </p>
+      <a class="btn" style="margin-top:0.6rem;"
+         href="https://wa.me/33615251063"
+         target="_blank">Écrire sur WhatsApp</a>
+    </div>
+    <div class="card">
+      <h3>3. On te fait un devis</h3>
+      <p>
+        On te répond avec un prix clair, un délai estimé et, si besoin, des options (taille, couleur, etc.).
+        Tant que tu n’as pas validé, rien ne part en impression.
+      </p>
+    </div>
+    <div class="card">
+      <h3>4. Tu valides, on imprime</h3>
+      <p>
+        Une fois que tu as dit “OK”, on lance l’impression. On te tient au courant si besoin (surtout pour
+        les projets un peu plus gros).
+      </p>
+    </div>
+    <div class="card">
+      <h3>5. Remise ou envoi</h3>
+      <p>
+        Autour de Genas / Est Lyonnais, on peut organiser une remise en main propre.  
+        Pour le reste de la France, on prépare un envoi proprement emballé.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIE PHOTO PREMIUM -->
+<section id="galerie">
+  <div class="tagline">Galerie</div>
+  <h2>Galerie MT3DFACTORY (exemples)</h2>
+  <p style="margin-bottom:1rem;">
+    Voici une galerie d’exemples de ce que nous pouvons réaliser.  
+    Tu pourras plus tard remplacer ces blocs par de vraies photos.
+  </p>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-thumb">Figurine Pokémon – Exemple</div>
+      <div class="badge-small">Pokémon</div>
+      <p>Pikachu 10 cm, finition propre, couleur jaune classique.</p>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb">Porte-clé prénom – Exemple</div>
+      <div class="badge-small">Porte-clé</div>
+      <p>Prénom “Léo” en blanc sur fond bleu, anneau métal.</p>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb">Support manette – Exemple</div>
+      <div class="badge-small">Setup</div>
+      <p>Support manette PS5, design simple, couleur noire.</p>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-thumb">Brainrot – Exemple</div>
+      <div class="badge-small">Brainrot</div>
+      <p>Mini figurine inspirée d’un meme TikTok, posée sur un bureau.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NOUVEAUTES EN DIRECT -->
+<section id="nouveautes">
+  <div class="tagline">Nouveautés</div>
+  <h2>Nouveautés en direct</h2>
+  <p>
+    Pour voir les vraies nouveautés en temps réel (nouvelles pièces, tests, idées, projets en cours),
+    le meilleur endroit reste notre <strong>chaîne WhatsApp</strong>.
+  </p>
+  <a class="btn" style="margin-top:0.8rem; margin-bottom:1.2rem;"
+     href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h"
+     target="_blank">Voir les nouveautés sur la chaîne</a>
+
+  <div class="grid">
+    <div class="card">
+      <span class="badge-new">Nouveau</span>
+      <h3>Figurines duo Pokémon</h3>
+      <p>Deux Pokémon sur le même socle (ex : Pikachu + Évoli). Idéal pour un cadeau ou un setup.</p>
+    </div>
+    <div class="card">
+      <span class="badge-new">Nouveau</span>
+      <h3>Packs classe / équipe</h3>
+      <p>Packs de porte-clés pour une classe, une équipe ou un groupe d’amis, avec prix adapté.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AVIS CLIENTS -->
+<section id="avis">
+  <div class="tagline">Avis</div>
+  <h2>Avis & retours</h2>
+  <p style="margin-bottom:1rem;">
+    Voici des exemples de retours que nous visons.  
+    Tu pourras plus tard remplacer par de vrais avis de tes clients.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>“Super propre”</h3>
+      <p>
+        “La figurine Pikachu est super propre, bien finie, mon fils l’adore. On voit que c’est fait avec soin.”
+      </p>
+      <p class="sub" style="margin-top:0.4rem;">– Exemple de retour client</p>
+    </div>
+    <div class="card">
+      <h3>“Commande simple par WhatsApp”</h3>
+      <p>
+        “J’ai tout fait par WhatsApp, réponse rapide, devis clair, et l’objet correspond exactement à ce que je voulais.”
+      </p>
+      <p class="sub" style="margin-top:0.4rem;">– Exemple de retour client</p>
+    </div>
+    <div class="card">
+      <h3>“Parfait pour un cadeau”</h3>
+      <p>
+        “J’ai commandé plusieurs porte-clés pour une classe, tout le monde était content, et les prénoms étaient bien lisibles.”
+      </p>
+      <p class="sub" style="margin-top:0.4rem;">– Exemple de retour client</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP 2024–2027 -->
+<section id="roadmap">
+  <div class="tagline">Roadmap</div>
+  <h2>Roadmap MT3DFACTORY 2024–2027</h2>
+  <p style="margin-bottom:1rem;">
+    On ne veut pas juste “imprimer des trucs”. On veut faire évoluer l’atelier étape par étape.
+  </p>
+
+  <div class="card">
+    <div class="roadmap-step">
+      <div class="roadmap-year">2024 – Lancement & premières commandes</div>
+      <p class="sub">
+        Mise en place de l’atelier, premières commandes, création du site, de la chaîne WhatsApp et du catalogue de base.
+      </p>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-year">2025 – Amélioration du matériel</div>
+      <p class="sub">
+        Investir dans du matériel plus avancé, améliorer les finitions, élargir les couleurs et les types de pièces.
+      </p>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-year">2026 – Catalogue élargi</div>
+      <p class="sub">
+        Plus de Pokémon, plus de supports, plus de thèmes (gaming, déco, cadeaux, brainrots, etc.).
+      </p>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-year">2027 – Structure plus grande</div>
+      <p class="sub">
+        Structurer davantage l’activité, gérer plus de commandes en parallèle, tout en gardant le contact direct avec les clients.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- EDITIONS LIMITEES -->
+<section id="editions">
+  <div class="tagline">Éditions limitées</div>
+  <h2>Éditions limitées & pièces spéciales</h2>
+  <p style="margin-bottom:1rem;">
+    Certaines pièces ne seront disponibles que sur une période limitée ou en quantité réduite.
+    Ces infos seront annoncées en priorité sur la chaîne WhatsApp.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="badge badge-accent">Édition limitée</span>
+      <h3>Pikachu “Setup Neon”</h3>
+      <p>
+        Version spéciale avec couleurs plus flashy, pensée pour les setups RGB.  
+        Quantité limitée, dates annoncées sur la chaîne.
+      </p>
+    </div>
+    <div class="card">
+      <span class="badge badge-accent">Édition limitée</span>
+      <h3>Pack 3 porte-clés</h3>
+      <p>
+        Pack de 3 porte-clés personnalisés à prix réduit, idéal pour un groupe d’amis ou une fratrie.
+      </p>
+    </div>
+  </div>
+
+  <a class="btn" style="margin-top:1rem;"
+     href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h"
+     target="_blank">Voir les éditions limitées en direct</a>
+</section>
+
+<!-- TARIFS -->
+<section id="tarifs">
+  <div class="tagline">Tarifs</div>
+  <h2>Grille de prix – indicatif</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Figurines Pokémon</h3>
+      <div class="price-row"><span>Petite (5–7 cm)</span><span class="price-value">8–12 €</span></div>
+      <div class="price-row"><span>Moyenne (10–12 cm)</span><span class="price-value">15–20 €</span></div>
+      <div class="price-row"><span>Premium</span><span class="price-value">25–40 €</span></div>
+      <p class="sub" style="margin-top:0.6rem;">
+        Le prix exact dépend du modèle, du niveau de détail et de la taille finale.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Porte-clés</h3>
+      <div class="price-row"><span>Prénom</span><span class="price-value">6 €</span></div>
+      <div class="price-row"><span>Initiales</span><span class="price-value">7 €</span></div>
+      <div class="price-row"><span>Pokémon</span><span class="price-value">8–10 €</span></div>
+      <p class="sub" style="margin-top:0.6rem;">
+        Idéal pour cadeaux, classes, équipes, groupes d’amis.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Brainrots</h3>
+      <div class="price-row"><span>Porte-clé</span><span class="price-value">5 €</span></div>
+      <div class="price-row"><span>Mini figurine</span><span class="price-value">10–15 €</span></div>
+      <p class="sub" style="margin-top:0.6rem;">
+        Le prix dépend de la complexité du brainrot choisi.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Supports gaming</h3>
+      <div class="price-row"><span>Manette</span><span class="price-value">12–18 €</span></div>
+      <div class="price-row"><span>Téléphone</span><span class="price-value">10–15 €</span></div>
+      <div class="price-row"><span>Souris / accessoires</span><span class="price-value">8–12 €</span></div>
+      <p class="sub" style="margin-top:0.6rem;">
+        Possibilité d’adapter le design à ton setup.
+      </p>
+    </div>
+  </div>
+
+  <div class="card card-soft" style="margin-top:1.5rem;">
+    <h3>Personnalisation & options</h3>
+    <div class="price-row"><span>Couleur spéciale</span><span class="price-value">+2 €</span></div>
+    <div class="price-row"><span>Taille augmentée</span><span class="price-value">+3 à +8 €</span></div>
+    <div class="price-row"><span>Gravure pseudo (si possible)</span><span class="price-value">+2 €</span></div>
+    <p style="margin-top:0.6rem; font-size:0.9rem;">
+      Pour un projet précis, le mieux est de demander un devis rapide par WhatsApp.
+    </p>
+  </div>
+</section>
+
+<!-- DEVIS XXL -->
+<section id="devis">
+  <div class="tagline">Devis</div>
+  <h2>Devis MT3DFACTORY – version pro</h2>
+
+  <div class="card">
+    <h3>Informations générales</h3>
+    <p><strong>Créateurs :</strong> Mathis &amp; Timéo – Genas (Est Lyonnais)</p>
+    <p><strong>Téléphone :</strong> 06 15 25 10 63</p>
+    <p><strong>WhatsApp :</strong> <a href="https://wa.me/33615251063" target="_blank">Lien direct</a></p>
+    <p><strong>Chaîne WhatsApp :</strong> <a href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h" target="_blank">MT3DFACTORY Officiel</a></p>
+
+    <h3 style="margin-top:1rem;">1. Objet du devis</h3>
+    <p>
+      Création et impression 3D personnalisée (figurine, porte-clés, support gaming ou objet sur mesure),
+      selon les spécifications fournies par le client.
+    </p>
+
+    <h3 style="margin-top:1rem;">2. Exemple de devis détaillé</h3>
+    <p class="sub">Exemple pour une commande type :</p>
+    <ul>
+      <li>Pikachu 10 cm – 15 €</li>
+      <li>Porte-clé prénom “Léo” – 6 €</li>
+      <li>Support manette PS5 – 14 €</li>
+    </ul>
+    <p style="margin-top:0.4rem;"><strong>Total estimé :</strong> 35 €</p>
+    <p class="sub">
+      Ce n’est qu’un exemple. Chaque devis réel est adapté à ta demande exacte.
+    </p>
+
+    <h3 style="margin-top:1rem;">3. Détail de la prestation</h3>
+    <ul>
+      <li>Analyse de la demande et validation du modèle (image, fichier ou description).</li>
+      <li>Préparation du fichier pour l’impression (ajustements basiques si nécessaire).</li>
+      <li>Impression 3D en PLA premium, avec paramètres adaptés à l’objet.</li>
+      <li>Nettoyage, retrait des supports et finitions simples.</li>
+      <li>Contrôle visuel de la pièce (aspect général, solidité basique).</li>
+      <li>Emballage et remise en main propre ou préparation pour envoi.</li>
+    </ul>
+
+    <h3 style="margin-top:1rem;">4. Délais</h3>
+    <p>
+      Les délais peuvent varier selon la file d’impression et la complexité de la pièce, mais à titre indicatif :
+    </p>
+    <ul>
+      <li>Autour de Lyon / Genas : environ 48h après validation du devis.</li>
+      <li>France entière : environ 1 semaine (impression + préparation + envoi).</li>
+    </ul>
+
+    <h3 style="margin-top:1rem;">5. Conditions</h3>
+    <ul>
+      <li>Paiement à la commande (modalités à définir au cas par cas).</li>
+      <li>Aucune impression ne commence sans validation claire du devis.</li>
+      <li>Les pièces personnalisées ne sont ni reprises ni échangées.</li>
+      <li>En cas de casse à la réception (photo à l’appui), une solution est étudiée.</li>
+    </ul>
+
+    <h3 style="margin-top:1rem;">6. Demander ton devis</h3>
+    <p>
+      Pour un devis personnalisé, envoie-nous :<br>
+      • Le type d’objet (Pokémon, porte-clé, support, sur mesure…)<br>
+      • La taille (petit / moyen / premium)<br>
+      • La couleur souhaitée<br>
+      • Le délai idéal
+    </p>
+    <a class="btn" style="margin-top:0.8rem;"
+       href="https://wa.me/33615251063?text=Je%20souhaite%20un%20devis%20MT3DFACTORY"
+       target="_blank">Demander un devis</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="tagline">FAQ</div>
+  <h2>Questions fréquentes</h2>
+
+  <div class="grid">
+
+    <div class="card faq-item">
+      <div class="faq-q">Comment commander ?</div>
+      <div class="faq-a">
+        Le plus simple : tu nous écris sur WhatsApp au <strong>06 15 25 10 63</strong> ou via
+        <a href="https://wa.me/33615251063" target="_blank">ce lien</a>.  
+        Tu nous dis ce que tu veux (objet, taille, couleur), on te répond avec un prix et un délai.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Quels matériaux utilisez-vous ?</div>
+      <div class="faq-a">
+        Nous utilisons principalement du <strong>PLA</strong>, un plastique adapté à l’impression 3D,
+        solide pour un usage déco et accessoires. Pour l’instant, nous restons sur ce matériau pour
+        garantir un résultat propre avec notre imprimante actuelle.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Peut-on choisir la couleur ?</div>
+      <div class="faq-a">
+        Oui, dans la limite des couleurs disponibles. Dis-nous ce que tu veux (ex : rouge, noir, blanc,
+        jaune Pokémon…) et on te dira ce qui est possible au moment de ta commande.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Quels sont les délais ?</div>
+      <div class="faq-a">
+        Autour de Lyon / Genas : environ 48h après validation du devis (selon la file d’impression).  
+        France entière : environ 1 semaine (impression + préparation + envoi).
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Faites-vous des objets sur mesure ?</div>
+      <div class="faq-a">
+        Oui, dans la limite de ce que notre imprimante peut faire. Le mieux est de nous envoyer une image
+        ou une description détaillée, avec la taille souhaitée. On te dira si c’est faisable et à quel prix.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Comment payer ?</div>
+      <div class="faq-a">
+        Le paiement se fait à la commande. Les modalités exactes sont définies au cas par cas (ex : espèces
+        en remise en main propre, solutions de paiement à distance, etc.).
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Et si l’objet arrive cassé ?</div>
+      <div class="faq-a">
+        Tu nous envoies une photo dès réception. On regarde ensemble ce qui s’est passé et on voit la
+        meilleure solution possible (réimpression ou autre arrangement).
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Est-ce que les objets sont adaptés aux enfants ?</div>
+      <div class="faq-a">
+        Ce sont des objets de décoration ou d’accessoire. Ce ne sont pas des jouets certifiés.  
+        Ils ne doivent pas être mis à la bouche, ni utilisés comme jouets pour très jeunes enfants.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Peut-on faire une commande pour une classe / une équipe ?</div>
+      <div class="faq-a">
+        Oui, nous pouvons faire plusieurs exemplaires d’un même objet (classe, équipe, groupe d’amis).
+        Il suffit de nous dire combien de pièces, pour quand, et on te fait un devis adapté.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Comment suivre les nouveautés ?</div>
+      <div class="faq-a">
+        En rejoignant notre <strong>chaîne WhatsApp</strong> :
+        <a href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h" target="_blank">MT3DFACTORY</a>.  
+        On y poste les nouvelles idées, les tests, les projets en cours.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Est-ce que vous êtes une grande entreprise ?</div>
+      <div class="faq-a">
+        Non, nous sommes un atelier en lancement, géré par <strong>Mathis &amp; Timéo</strong>.  
+        C’est justement ce qui nous permet de suivre chaque commande de près et de rester accessibles.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Puis-je voir des exemples avant de commander ?</div>
+      <div class="faq-a">
+        Oui, tu peux demander des photos d’exemples sur WhatsApp, et tu peux aussi suivre la chaîne
+        pour voir les pièces déjà réalisées ou en cours.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Est-ce que vous faites des remises ?</div>
+      <div class="faq-a">
+        Pour plusieurs pièces identiques (ex : 10 porte-clés pour une classe), on peut adapter le prix.
+        Le mieux est de nous demander un devis groupé.
+      </div>
+    </div>
+
+    <div class="card faq-item">
+      <div class="faq-q">Puis-je annuler une commande ?</div>
+      <div class="faq-a">
+        Tant que l’impression n’a pas commencé, on peut discuter d’une annulation.  
+        Une fois l’impression lancée, la pièce est considérée comme personnalisée et ne peut plus être annulée.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="tagline">Contact</div>
+  <h2>Contact & commandes</h2>
+  <p style="margin-bottom:1rem;">
+    Pour toute commande, question ou projet, tu peux nous contacter directement :
+  </p>
+
+  <div class="card">
+    <p><strong>Téléphone :</strong> 06 15 25 10 63</p>
+    <p><strong>WhatsApp :</strong> <a href="https://wa.me/33615251063" target="_blank">Envoyer un message</a></p>
+    <p><strong>Chaîne WhatsApp :</strong> <a href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h" target="_blank">MT3DFACTORY – Officiel</a></p>
+    <p><strong>Zone :</strong> Genas / Est Lyonnais – France entière pour les envois.</p>
+    <p style="margin-top:0.6rem; font-size:0.9rem;">
+      Pour une demande précise, envoie : une description, une image si possible, la taille souhaitée et la couleur.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  MT3DFACTORY – Mathis &amp; Timéo · Atelier d’impression 3D à Genas · « Ici, tout devient réalisable »
+</footer>
+
+<!-- IA MT3D – VERSION XXL -->
+<div class="ia-toggle" id="iaToggle">💬 IA MT3D</div>
+
+<div class="ia-box" id="iaBox">
+  <div class="ia-header">
+    Conseiller MT3D
+    <span id="iaClose" style="cursor:pointer;">✕</span>
+  </div>
+
+  <div class="ia-body" id="iaBody">
+    <div class="ia-msg ia-bot">
+      Salut ! Je suis l’IA MT3D 🤖<br>
+      Tu peux me parler comme à un conseiller :<br>
+      • “J’ai 15 €, tu me proposes quoi ?”<br>
+      • “Je veux un cadeau Pokémon.”<br>
+      • “C’est quoi les délais ?”<br>
+      • “Je veux un objet sur mesure.”<br>
+      <div class="ia-hints">
+        Plus tu es précis, plus ma réponse sera utile.
+      </div>
+    </div>
+  </div>
+
+  <div class="ia-footer">
+    <input class="ia-input" id="iaInput" placeholder="Ex : j’ai 20€ et je veux un Pokémon">
+    <button class="ia-send" id="iaSend">OK</button>
+  </div>
+</div>
+
+<script>
+  const iaToggle = document.getElementById("iaToggle");
+  const iaBox = document.getElementById("iaBox");
+  const iaClose = document.getElementById("iaClose");
+  const iaBody = document.getElementById("iaBody");
+  const iaInput = document.getElementById("iaInput");
+  const iaSend = document.getElementById("iaSend");
+
+  iaToggle.onclick = () => iaBox.style.display = "flex";
+  iaClose.onclick = () => iaBox.style.display = "none";
+
+  function addMsg(text, bot = true) {
+    const div = document.createElement("div");
+    div.className = "ia-msg " + (bot ? "ia-bot" : "ia-user");
+    div.innerHTML = text;
+    iaBody.appendChild(div);
+    iaBody.scrollTop = iaBody.scrollHeight;
+  }
+
+  function logic(msg) {
+    const m = msg.toLowerCase();
+
+    // Budget
+    if (m.includes("€") || m.includes("euro") || m.includes("budget")) {
+      return `
+        Ok, parlons budget 💸<br><br>
+        • 5–7 € → porte-clé (prénom, initiales, brainrot simple)<br>
+        • 8–12 € → petite figurine Pokémon ou Pokéball<br>
+        • 15–20 € → figurine Pokémon moyenne (10–12 cm)<br>
+        • 25–40 € → modèle premium ou projet plus complexe<br><br>
+        Le mieux : dis-moi si tu préfères Pokémon, porte-clé, brainrot ou support gaming.<br>
+        Et si tu veux passer à l’action :<br>
+        👉 <a href="https://wa.me/33615251063" target="_blank">Commander sur WhatsApp</a>
+      `;
+    }
+
+    // Pokémon
+    if (m.includes("pokémon") || m.includes("pokemon")) {
+      return `
+        Pokémon, très bon choix ⚡<br><br>
+        Idées possibles :<br>
+        • Pikachu 10 cm (~15 €)<br>
+        • Évoli 10–12 cm (~15–20 €)<br>
+        • Pokéball display (~12 €)<br><br>
+        Tu peux aussi demander un autre Pokémon, on voit ensemble si c’est faisable.<br>
+        👉 <a href="https://wa.me/33615251063" target="_blank">Parler Pokémon sur WhatsApp</a>
+      `;
+    }
+
+    // Porte-clés
+    if (m.includes("porte") && m.includes("clé")) {
+      return `
+        Pour les porte-clés 🔑<br><br>
+        • Prénom : 6 €<br>
+        • Initiales : 7 €<br>
+        • Thème Pokémon : 8–10 €<br><br>
+        Tu nous envoies le prénom / les initiales + la couleur souhaitée, et on te confirme tout.<br>
+        👉 <a href="https://wa.me/33615251063" target="_blank">Commander un porte-clé</a>
+      `;
+    }
+
+    // Support
+    if (m.includes("support") || m.includes("manette") || m.includes("setup")) {
+      return `
+        Pour ton setup 🎮<br><br>
+        • Support manette PS/Xbox : 12–18 €<br>
+        • Support téléphone : 10–15 €<br>
+        • Support souris / accessoires : 8–12 €<br><br>
+        Tu peux nous envoyer une photo de ton bureau pour qu’on adapte le style.<br>
+        👉 <a href="https://wa.me/33615251063" target="_blank">Parler de ton setup</a>
+      `;
+    }
+
+    // Brainrot / meme
+    if (m.includes("brainrot") || m.includes("meme")) {
+      return `
+        Brainrots & memes 😈<br><br>
+        • Porte-clé brainrot : 5 €<br>
+        • Mini figurine brainrot : 10–15 €<br><br>
+        On choisit le meme ou le délire ensemble, pour que ce soit vraiment ton style.<br>
+        👉 <a href="https://wa.me/33615251063" target="_blank">Choisir un brainrot</a>
+      `;
+    }
+
+    // Délais
+    if (m.includes("delai") || m.includes("délai") || m.includes("livraison")) {
+      return `
+        Délais indicatifs ⏱️<br><br>
+        • Autour de Lyon / Genas : ~48h après validation du devis<br>
+        • France entière : ~1 semaine (impression + préparation + envoi)<br><br>
+        Pour suivre les nouveautés et les projets en cours :<br>
+        👉 <a href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h" target="_blank">Chaîne MT3DFACTORY</a>
+      `;
+    }
+
+    // Devis
+    if (m.includes("devis")) {
+      return `
+        Pour un devis précis 🧾<br><br>
+        Envoie-nous :<br>
+        • Le type d’objet (Pokémon, porte-clé, support, sur mesure…)<br>
+        • La taille (petit / moyen / premium)<br>
+        • La couleur souhaitée<br>
+        • Le délai idéal<br><br>
+        On te répond avec un prix clair et un délai réaliste.<br>
+        👉 <a href="https://wa.me/33615251063" target="_blank">Demander un devis</a>
+      `;
+    }
+
+    // Sur mesure
+    if (m.includes("sur mesure") || m.includes("personnalisé") || m.includes("custom")) {
+      return `
+        Projet sur mesure 🛠️<br><br>
+        • Envoie une image ou un croquis<br>
+        • Donne une taille approximative<br>
+        • Dis-nous si c’est pour déco, setup, cadeau, etc.<br><br>
+        On te dit si c’est faisable, à quel prix, et dans quel délai.<br>
+        👉 <a href="https://wa.me/33615251063" target="_blank">Parler d’un projet sur mesure</a>
+      `;
+    }
+
+    // Histoire / qui vous êtes
+    if (m.includes("qui") && (m.includes("vous") || m.includes("êtes"))) {
+      return `
+        MT3DFACTORY, c’est Mathis & Timéo 👋<br><br>
+        Deux passionnés qui ont commencé avec une seule imprimante 3D, des tests, des ratés, et surtout
+        l’envie de faire des objets propres et stylés pour les setups, les fans de Pokémon et les projets
+        sur mesure.<br><br>
+        Tu peux lire notre histoire complète dans la section “Notre histoire” du site.
+      `;
+    }
+
+    // Default
+    return `
+      Je ne suis pas sûr à 100% de ce que tu veux, mais Mathis & Timéo peuvent t’aider directement 👇<br><br>
+      👉 <a href="https://wa.me/33615251063" target="_blank">Parler sur WhatsApp</a><br><br>
+      Et pour voir les nouveautés, les idées et les projets en cours :<br>
+      👉 <a href="https://whatsapp.com/channel/0029Vb6pHq1KrWQnogGx7v1h" target="_blank">Chaîne MT3DFACTORY</a>
+    `;
+  }
+
+  iaSend.onclick = () => {
+    const v = iaInput.value.trim();
+    if (!v) return;
+    addMsg(v, false);
+    const r = logic(v);
+    setTimeout(() => addMsg(r, true), 200);
+    iaInput.value = "";
+  };
+
+  iaInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") iaSend.click();
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
